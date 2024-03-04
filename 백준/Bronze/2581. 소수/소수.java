@@ -13,7 +13,7 @@ public class Main {
         
         
         for(int i=x; i<=y; i++){
-            if(i == 1) pass = true;
+            if(i == 1) continue;
             for(int j=2;j<i;j++){
                 if(i % j == 0) {
                     pass = true;
