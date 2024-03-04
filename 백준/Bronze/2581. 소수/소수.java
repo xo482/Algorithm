@@ -4,6 +4,7 @@ import java.util.*;
 public class Main {
 	public static void main(String[] args) throws IOException {
 	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
         
         int x = Integer.parseInt(br.readLine());
         int y = Integer.parseInt(br.readLine());
@@ -30,10 +31,12 @@ public class Main {
                 pass = false;
         }
         
-        if(sum != 0){
-            System.out.println(sum);
-        }
-        System.out.print(min);
+        if(min == -1)
+            sb.append(min);
+        else
+            sb.append(sum).append("\n").append(min);
+        
+        System.out.print(sb);
 	}
 }
 
