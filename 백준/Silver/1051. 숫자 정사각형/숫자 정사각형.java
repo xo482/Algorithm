@@ -13,7 +13,7 @@ public class Main {
 
         for (int k = j+1; k < M; k++) {
             down = k - j;
-            if (check(i + down) && value == list[i][k]) {
+            if (((i + down) < N) && value == list[i][k]) {
                 if (list[i + down][j] == value && list[i + down][k] == value) {
                     area = (down+1)*(down+1);
                     if (area > answer) answer = area;
@@ -21,11 +21,6 @@ public class Main {
             }
         }
     }
-
-    private static boolean check(int i) {
-        return i < N;
-    }
-
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
