@@ -17,7 +17,6 @@ public class Main {
             arr[i][1] = Integer.parseInt(st.nextToken());
         }
 
-        // x값을 기준으로 정렬, x값이 같은 경우 y값을 기준으로 정렬
         Arrays.sort(arr, Comparator.comparingInt((int[] a) -> a[0]).thenComparingInt(a -> a[1]));
 
         for (int[] one : arr) {
