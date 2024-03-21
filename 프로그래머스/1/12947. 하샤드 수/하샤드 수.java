@@ -5,8 +5,7 @@ class Solution {
             .map(Character::getNumericValue)
             .sum();
         
-        if(x % sum == 0)
-            return true;
-        return false;
+        
+        return x % sum == 0;
     }
 }
