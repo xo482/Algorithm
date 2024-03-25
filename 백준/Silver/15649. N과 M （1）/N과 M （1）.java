@@ -5,7 +5,7 @@ public class Main {
     static int[] arr;
     static boolean[] visit;
     static int N,M;
-    static StringBuilder sb;
+    static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
@@ -22,16 +22,16 @@ public class Main {
 
         dfs(0);
 
+        System.out.print(sb);
     }
 
     private static void dfs(int depth) {
 
         if (depth == M){
-            sb = new StringBuilder();
             for (int i : arr) {
                 sb.append(i).append(" ");
             }
-            System.out.println(sb);
+            sb.append("\n");
             return;
         }
 
