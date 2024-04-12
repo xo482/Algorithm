@@ -8,28 +8,28 @@ public class Main {
 
         int N = Integer.parseInt(st.nextToken());
         int M = Integer.parseInt(st.nextToken());
-        int[] arr = new int[N];
+        int[] arr = new int[N+1];
         int max = Integer.MIN_VALUE;
         int window = 0;
 
         // init
         st = new StringTokenizer(br.readLine());
-        for(int i = 0; i < N; i++)
+        for(int i = 1; i < N+1; i++)
             arr[i] = Integer.parseInt(st.nextToken());
 
-        for (int i = 0; i < M; i++)
+        for (int i = 1; i < M; i++)
             window += arr[i];
 
         // logic
-        for(int i = 0; i < N-M+1; i++) {
+        for(int i = M; i < N+1; i++) {
+
+            window += arr[i];
+
             if(max < window) {
                 max = window;
             }
 
-            window -= arr[i];
-            if (i + M < N) {
-                window += arr[i+M];
-            }
+            window -= arr[i - M + 1];
         }
 
         System.out.println(max);
