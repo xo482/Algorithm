@@ -2,24 +2,26 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	public static void main(String[] args) throws IOException {
-	    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int[][] matrix = new int[9][9];
-        int row=0, col=0, max=0;
-        
-        
-        for(int i=0; i<9;i++){
-            String[] rows = br.readLine().split(" ");
-            for(int j=0; j<9;j++){
-                matrix[i][j] = Integer.parseInt(rows[j]);
-                if(matrix[i][j] > matrix[row][col]){
-                    row = i;
-                    col = j;
+    public static void main(String[] args) throws IOException {
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        StringTokenizer st;
+        int[][] arr = new int[9][9];
+        int r=0, c=0;
+
+        for(int i = 0; i < 9; i++) {
+            st = new StringTokenizer(br.readLine());
+            for(int j = 0; j < 9; j++) {
+                arr[i][j] = Integer.parseInt(st.nextToken());
+                if(arr[i][j] > arr[r][c]) {
+                    r = i;
+                    c = j;
                 }
             }
         }
-        
-        System.out.println(matrix[row][col]);
-        System.out.print((row+1) + " " + (col+1));
-	}
+
+        sb.append(arr[r][c]).append("\n").append(r+1).append(" ").append(c+1);
+        System.out.print(sb);
+
+    }
 }
