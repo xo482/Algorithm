@@ -23,40 +23,34 @@ public class Main {
         int i = N/2; // r
         int j = N/2; // c
         arr[i][j] = 1;
-        if (1 == number) {
-            I = i+1;
-            J = j+1;
-        }
 
-        int cnt = 1;
-        int ele = 2;
-        while (true) {
+        int cnt = 1; // 한번에 진행하는 이동 수
+        int ele = 1; // 각 인덱스에 들어갈 값
+        while (i != -1) {
             for (int k = 0; k < 2; k++) {
                 for (int l = 0; l < cnt; l++) {
-                    i += dr[index];
-                    j += dc[index];
-                    if (i== -1) break;
-                    if (ele == number) {
+                    if (number == ele) {
                         I = i+1;
                         J = j+1;
                     }
                     arr[i][j] = ele++;
+                    i += dr[index];
+                    j += dc[index];
+                    if (i == -1) break;
                 }
-                if (i== -1) break;
+                if (i == -1) break;
                 turn();
             }
-            if (i== -1) break;
             cnt++;
         }
 
 
         for (int[] ints : arr) {
-            for (int anInt : ints) {
-                sb.append(anInt).append(" ");
-            }
+            for (int anInt : ints) sb.append(anInt).append(" ");
             sb.append("\n");
         }
         sb.append(I).append(" ").append(J);
+
         System.out.print(sb);
     }
 
