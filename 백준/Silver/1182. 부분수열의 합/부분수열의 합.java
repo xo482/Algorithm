@@ -22,15 +22,14 @@ public class Main {
             arr[i] = Integer.parseInt(st.nextToken());
 
         for (int i = 0; i < 1<<N; i++) {
-            ArrayList<Integer> subSet = new ArrayList<>();
+            int sum = 0;
             for (int j = 0; j < N; j++)
                 if ((i & (1 << j)) != 0)
-                    subSet.add(arr[j]);
-
-            int sum = 0;
-            for (Integer integer : subSet) sum += integer;
-            if (sum == S && !subSet.isEmpty()) cnt++;
+                    sum += arr[j];
+            if (sum == S) cnt++;
         }
+
+        if (S == 0) cnt--;
 
         System.out.println(cnt);
     }
