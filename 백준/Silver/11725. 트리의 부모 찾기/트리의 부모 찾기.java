@@ -38,18 +38,13 @@ public class Main {
             int now = Q.removeFirst();
             for (int next : adj[now]) {
                 if (visited[next] == 0) {
-                    visited[next] = visited[now] + 1;
+                    visited[next] = now;
                     Q.addLast(next);
                 }
             }
         }
 
-        for (int now = 2; now <= N; now++) {
-            for (int next : adj[now]) {
-                if (visited[next] < visited[now]) sb.append(next).append("\n");
-            }
-        }
-
+        for (int now = 2; now <= N; now++) sb.append(visited[now]).append("\n");
         System.out.print(sb);
     }
 }
