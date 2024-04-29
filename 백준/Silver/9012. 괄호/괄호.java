@@ -1,38 +1,24 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
+import java.io.*;
 
 public class Main {
-
-    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static StringBuilder sb = new StringBuilder();
-    static int n;
-
     public static void main(String[] args) throws IOException {
-        n = Integer.parseInt(br.readLine());
+        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+        StringBuilder sb = new StringBuilder();
+        int T = Integer.parseInt(br.readLine());
 
-        while (n-- > 0) {
-            int a = 0;
-            int b = 0;
-            String answer = "";
-            String[] strings = br.readLine().split("");
+        while (T-- > 0) {
+            int x = 0;
+            char[] chars = br.readLine().toCharArray();
 
-            for (String s : strings) {
-                if (s.equals("(")) a++;
-                else b++;
+            for (char c : chars) {
+                if (c == '(') x++;
+                else x--;
 
-                if (a < b) {
-                    answer = "NO";
-                    break;
-                }
+                if (x < 0) break;
             }
 
-            if (answer.equals("")) {
-                if (a==b) answer = "YES";
-                else answer = "NO";
-            }
-
-            sb.append(answer).append("\n");
+            if (x == 0) sb.append("YES\n");
+            else sb.append("NO\n");
         }
 
         System.out.print(sb);
