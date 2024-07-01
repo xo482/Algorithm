@@ -1,70 +1,71 @@
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.util.*;
+import java.io.*;
+import java.util.ArrayDeque;
+import java.util.StringTokenizer;
 
 public class Main {
 
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static StringBuilder sb = new StringBuilder();
     static StringTokenizer st;
-    static int[][] adj;
-    static boolean[] visited;
-    static int N; // 정점의 개수
-    static int M; // 간선의 개수
-    static int V; // 탐색 시작 지점
-    static ArrayDeque<Integer> queue = new ArrayDeque<>();
+    static StringBuilder sb = new StringBuilder();
+    static int N;
+    static int M;
+    static int V;
 
     public static void main(String[] args) throws IOException {
+
         st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
         V = Integer.parseInt(st.nextToken());
-        visited = new boolean[N + 1];
-        adj = new int[N + 1][N + 1];
+        int[][] adj = new int[N + 1][N + 1];
+        boolean[] visitedDfs = new boolean[N + 1];
+        boolean[] visitedBfs = new boolean[N + 1];
 
         for (int i = 0; i < M; i++) {
             st = new StringTokenizer(br.readLine());
-            int com1 = Integer.parseInt(st.nextToken());
-            int com2 = Integer.parseInt(st.nextToken());
-            adj[com1][com2] = 1;
-            adj[com2][com1] = 1;
+            int start = Integer.parseInt(st.nextToken());
+            int end = Integer.parseInt(st.nextToken());
+
+            adj[start][end] = 1;
+            adj[end][start] = 1;
         }
 
-        dfs(V);
+        ArrayDeque<Integer> stack = new ArrayDeque<>();
+        stack.addLast(V);
 
-        sb.append("\n");
-        for (int i = 1; i < N+1; i++) {
-            visited[i] = false;
-        }
+        while (!stack.isEmpty()) {
+            int now = stack.removeLast();
+            if (visitedDfs[now]) continue;
 
-        // 시작 노드 설정
-        queue.addLast(V);
-
-        while (!queue.isEmpty()) {
-            int now = queue.removeFirst();
-            if (visited[now]) continue;
-            visited[now] = true;
+            visitedDfs[now] = true;
             sb.append(now).append(" ");
-            for (int i = 1; i < N + 1; i++) {
-                if (!visited[i] && adj[now][i] == 1) {
-                    queue.addLast(i);
+
+            for (int i = N; i > 0; i--) {
+                if (adj[now][i] == 1 && !visitedDfs[i]) {
+                    stack.addLast(i);
                 }
-
             }
-
-
         }
+        sb.append("\n");
+
+
+        ArrayDeque<Integer> Q = new ArrayDeque<>();
+        Q.addLast(V);
+        visitedBfs[V] = true;
+
+        while (!Q.isEmpty()) {
+            int now = Q.removeFirst();
+            sb.append(now).append(" ");
+
+            for (int i = 1; i < N + 1; i++) {
+                if (adj[now][i] == 1 && !visitedBfs[i]) {
+                    Q.addLast(i);
+                    visitedBfs[i] = true;
+                }
+            }
+        }
+
 
         System.out.println(sb);
     }
-
-    private static void dfs(int now) {
-        visited[now] = true;
-        sb.append(now).append(" ");
-        for (int i = 1; i < N+1; i++)
-            if (!visited[i] && adj[now][i] == 1)
-                dfs(i);
-    }
-
 }
