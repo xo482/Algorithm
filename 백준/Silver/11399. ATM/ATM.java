@@ -1,37 +1,24 @@
 import java.io.*;
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.StringTokenizer;
 
 public class Main {
 
-    static int[] arr;
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int sum = 0;
-        int N = Integer.parseInt(br.readLine()); // 줄 서 있는 사람의 수
-        arr = new int[N];
 
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; i++) {
-            arr[i] = Integer.parseInt(st.nextToken());
-        }
-        
-        Arrays.sort(arr);
+        int N = Integer.parseInt(br.readLine());
+        st = new StringTokenizer(br.readLine());
+        List<Integer> list = new ArrayList<>();
+        int time = 0;
 
-        for (int i = 0; i < N; i++) {
-            sum += accumulate(i);
-        }
-
-        System.out.print(sum);
+        for (int i = 0; i < N; i++) list.add(Integer.parseInt(st.nextToken()));
+        Collections.sort(list);
+        for (int i = N; i >= 1; i--) time += (list.remove(0) * i);
+        System.out.print(time);
     }
-
-    public static int accumulate(int index) {
-        int sum = 0;
-        for (int i = 0; i <= index; i++) {
-            sum += arr[i];
-        }
-        return sum;
-    }
-
 }
