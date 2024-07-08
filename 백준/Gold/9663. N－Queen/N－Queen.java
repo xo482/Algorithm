@@ -3,44 +3,41 @@ import java.io.*;
 public class Main {
 
     static int N;
-    static int[] cols;
-    static int cnt = 0;
+    static int answer=0;
+    static int[] arr;
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         N = Integer.parseInt(br.readLine());
-        cols = new int[N];
+        arr = new int[N + 1]; // 값이 0이면 비어있음을 의미한다. 인덱스는 그 라인, 값은 그 라인 어디에 퀸을 놓았는지를 의미한다.
 
-        queen(0);
-
-        System.out.println(cnt);
+        tracking(1);
+        System.out.println(answer);
     }
 
-    private static void queen(int index) {
-        if (index == N) {
-            cnt++;
+    private static void tracking(int now) {
+        if (now == N+1) {
+            answer++;
             return;
         }
 
-        for (int i = 0; i < N; i++) {
-            cols[index] = i; //사람을 일단 i번째에 세우고
+        for (int i = 1; i <= N; i++) {
+            boolean flag = false;
 
-            // 그 다음에 문제 없는지 확인
-            if (check(index))
-                // 문제 없으면 다음 사람(다음 가로)
-                queen(index+1);
+            for (int j = 1; j < now; j++) {
+                int x = now-j;
+                int y = Math.abs(i - arr[j]);
+                if (i == arr[j] || x==y){
+                    flag = true;
+                    break;
+                }
+            }
+
+            if (!flag) {
+                arr[now] = i;
+                tracking(now+1);
+            }
         }
-    }
-
-    private static boolean check(int index) {
-
-        //세로가 겹치는 애들이 있는지 i 번째 사람과 index번째 사람이 같은 줄에 서있는지 확인
-        // 기울기가 1혹은 -1인지 확인
-        for (int i = 0; i < index; i++) {
-            if (cols[i] == cols[index] || Math.abs(index - i) == Math.abs(cols[index] - cols[i]))
-                return false;
-        }
-        return true;
     }
 
 
