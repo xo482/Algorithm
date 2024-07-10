@@ -6,8 +6,8 @@ public class Main {
     static int N;
     static int M;
     static int INF = 1_000_000_001;
-    static int[][] weight;
-    static int[] nodeList;
+    static int[][] arr;
+    static int[] distance;
     static boolean[] visited;
 
     public static void main(String[] args) throws IOException {
@@ -15,13 +15,13 @@ public class Main {
         StringTokenizer st;
         N = Integer.parseInt(br.readLine());
         M = Integer.parseInt(br.readLine());
-        weight = new int[N + 1][N + 1];
-        nodeList = new int[N + 1];
+        arr = new int[N + 1][N + 1];
+        distance = new int[N + 1];
         visited = new boolean[N + 1];
 
         for (int i = 0; i <N+1; i++) {
             for (int j = 0; j <N+1; j++) {
-                weight[i][j] = INF;
+                arr[i][j] = INF;
             }
         }
 
@@ -30,39 +30,36 @@ public class Main {
             int u = Integer.parseInt(st.nextToken());
             int v = Integer.parseInt(st.nextToken());
             int val = Integer.parseInt(st.nextToken());
-            weight[u][v] = Math.min(weight[u][v], val);
+            arr[u][v] = Math.min(arr[u][v], val);
         }
 
         st = new StringTokenizer(br.readLine());
-        dijkstra(Integer.parseInt(st.nextToken()));
-        System.out.print(nodeList[Integer.parseInt(st.nextToken())]);
+        int start = Integer.parseInt(st.nextToken());
+        int end = Integer.parseInt(st.nextToken());
+        dijkstra(start);
+        System.out.print(distance[end]);
     }
 
     private static void dijkstra(int start) {
-        Arrays.fill(nodeList, INF);
-        nodeList[start] = 0;
+        Arrays.fill(distance, INF);
+        distance[start] = 0;
 
-        for (int i = 0; i < N; i++) {
+        for (int i = 0; i < N-1; i++) {
             int index = getSmallIndex();
-            if (index == -1) continue;
             visited[index] = true;
 
-            for (int j = 1; j < N + 1; j++) {
-                if (!visited[j]) {
-                    if (nodeList[j] > nodeList[index] + weight[index][j]) {
-                        nodeList[j] = nodeList[index] + weight[index][j];
-                    }
-                }
-            }
+            for (int j = 1; j < N + 1; j++)
+                if (!visited[j] && distance[j] > distance[index] + arr[index][j])
+                    distance[j] = distance[index] + arr[index][j];
         }
     }
 
     private static int getSmallIndex() {
-        int min = INF;
+        int min = INF+1;
         int index = -1;
         for (int i = 1; i < N + 1; i++) {
-            if (min > nodeList[i] && !visited[i]) {
-                min = nodeList[i];
+            if (min > distance[i] && !visited[i]) {
+                min = distance[i];
                 index = i;
             }
         }
