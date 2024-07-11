@@ -1,42 +1,33 @@
 import java.util.*;
+import java.io.*;
 
 public class Main {
-    public static void main(String[] args) {
-        Scanner sc = new Scanner(System.in);
-        int[] input = new int[9];
-        int sum = 0;
-        int[] criminal = new int[2];
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static int[] list = new int[9];
+    static int now;
+    static int sum;
+    static StringBuilder sb = new StringBuilder();
 
-        // Input phase
+    public static void main(String[] args) throws IOException {
+
         for (int i = 0; i < 9; i++) {
-            while (!sc.hasNextInt()) {
-                sc.next(); // consume non-integer input
-                System.out.println("Invalid input. Please enter an integer.");
-            }
-            input[i] = sc.nextInt();
-            sum += input[i];
+            now = Integer.parseInt(br.readLine());
+            list[i] = now;
+            sum += now;
         }
+        Arrays.sort(list);
 
-        int sub = sum - 100;
-        boolean found = false;
+        for (int i = 0; i < 9; i++) {
+            for (int j = i+1; j < 9; j++) {
 
-        // Finding criminal numbers
-        for (int j = 0; j < 9 && !found; j++) {
-            for (int k = j + 1; k < 9; k++) {
-                if (input[j] + input[k] == sub) {
-                    criminal[0] = input[j];
-                    criminal[1] = input[k];
-                    found = true;
-                    break;
+                if (sum - (list[i] + list[j]) == 100) {
+                    for (int k = 0; k < 9; k++) {
+                        if (k == i || k == j) continue;
+                        sb.append(list[k]).append("\n");
+                    }
+                    System.out.print(sb);
+                    return;
                 }
-            }
-        }
-
-        // Output phase
-        Arrays.sort(input);
-        for (int p = 0; p < 9; p++) {
-            if (input[p] != criminal[0] && input[p] != criminal[1]) {
-                System.out.println(input[p]);
             }
         }
     }
