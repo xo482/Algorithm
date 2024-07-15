@@ -1,24 +1,22 @@
-import java.io.*;
-import java.util.ArrayDeque;
+import java.util.*;
 
-public class Main {
+public class Main{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        ArrayDeque<Integer> Card = new ArrayDeque<>();
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
-        ArrayDeque<Integer> Q = new ArrayDeque<>();
-        boolean flag = false;
-        int answer = 0;
-
-        for (int i = 1; i < N + 1; i++) Q.addLast(i);
-
-        while (!Q.isEmpty()) {
-            answer = Q.removeFirst();
-
-            if (flag) Q.addLast(answer);
-            flag = !flag;
+        int N = sc.nextInt();
+        for(int i=1; i<=N; i++){
+            Card.add(i);
         }
 
-        System.out.print(answer);
+        while(Card.size() != 1){
+            Card.removeFirst();
+            Card.addLast(Card.removeFirst());
+        }
+
+        System.out.println(Card.getFirst());
+
+        Card.removeFirst();
     }
 }
