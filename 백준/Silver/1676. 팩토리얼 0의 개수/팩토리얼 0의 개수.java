@@ -1,17 +1,12 @@
-import java.io.*;
+import java.util.*;
 
-public class Main {
+public class Main{
+    public static void main(String[] args){
+        Scanner sc = new Scanner(System.in);
+        int N = sc.nextInt();
 
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
-        int sum = 0;
+        int Zero_num = (int) N/5 + (int) N/25 + (int) N/125;
 
-        while (N >= 5) {
-            N /= 5;
-            sum += N;
-        }
-
-        System.out.println(sum);
+        System.out.println(Zero_num);
     }
 }
