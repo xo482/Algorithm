@@ -1,29 +1,24 @@
-import java.util.*;
 import java.io.*;
 
 public class Main {
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         int N = Integer.parseInt(br.readLine());
-        int cnt = 0, i = 0;
-        boolean x = true;
+        int i = N / 5 + 1;
+        int sum = 0;
+        boolean flag = false;
 
-        for (i = N/5; i >= 0; i--) {
+        while (i-- > 0)
             if ((N - (5 * i)) % 3 == 0) {
-                x = false;
+                flag = true;
                 break;
             }
-        }
 
-        if (x) {
-            System.out.println(-1);
-        } else {
-            cnt += i;
-            cnt += (N - (5 * i)) / 3;
-            System.out.println(cnt);
-        }
-
-
+        if (flag) {
+            sum = i;
+            sum += (N - (5 * i)) / 3;
+            System.out.print(sum);
+        } else System.out.print(-1);
 
     }
 }
