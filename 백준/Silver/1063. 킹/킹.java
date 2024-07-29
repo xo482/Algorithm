@@ -3,69 +3,68 @@ import java.util.*;
 
 public class Main {
 
-    static int kingX;
-    static int kingY;
-    static int rockX;
-    static int rockY;
-
-    public static void move(int y, int x){
-        if((kingX+x) == rockX && (kingY+y) == rockY){
-            if((0 <= rockX+x && rockX+x <= 7) && (0 <= rockY+y && rockY+y <= 7)){
-                kingX += x;
-                kingY += y;
-                rockX += x;
-                rockY += y;
-            }
-
-        }
-        else{
-            if((0 <= kingX+x && kingX+x <= 7) && (0 <= kingY+y && kingY+y <= 7)){
-                kingX += x;
-                kingY += y;
-            }
-        }
-    }
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static int kingI;
+    static int kingJ;
+    static int rockI;
+    static int rockJ;
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] init = br.readLine().split(" ");
-        kingX = init[0].charAt(0) - 'A';
-        kingY = init[0].charAt(1) - '1';
-        rockX = init[1].charAt(0) - 'A';
-        rockY = init[1].charAt(1) - '1';
 
-        int N = Integer.parseInt(init[2]);
-        while(N-- >0){
-            String direction = br.readLine();
-            if(direction.equals("L")){
-                move(0,-1);
+        String[] split = br.readLine().split(" ");
+        kingJ = split[0].charAt(0) - 'A';
+        kingI = split[0].charAt(1) - '1';
+        rockJ = split[1].charAt(0) - 'A';
+        rockI = split[1].charAt(1) - '1';
+        int N = Integer.parseInt(split[2]);
+
+        while (N-- > 0) {
+            String command = br.readLine();
+            if (command.equals("R")) {
+                move(0, 1);
             }
-            if(direction.equals("R")){
-                move(0,1);
+            else if (command.equals("L")) {
+                move(0, -1);
             }
-            if(direction.equals("T")){
-                move(1,0);
+            else if (command.equals("T")) {
+                move(1, 0);
             }
-            if(direction.equals("B")){
-                move(-1,0);
+            else if (command.equals("B")) {
+                move(-1, 0);
             }
-            if(direction.equals("LT")){
-                move(1,-1);
+            else if (command.equals("RB")) {
+                move(-1, 1);
             }
-            if(direction.equals("LB")){
-                move(-1,-1);
+            else if (command.equals("RT")) {
+                move(1, 1);
             }
-            if(direction.equals("RT")){
-                move(1,1);
+            else if (command.equals("LB")) {
+                move(-1, -1);
             }
-            if(direction.equals("RB")){
-                move(-1,1);
+            else if (command.equals("LT")) {
+                move(1, -1);
             }
         }
 
-        System.out.print((char)(kingX + 'A'));
-        System.out.println((kingY+1));
-        System.out.print((char)(rockX + 'A'));
-        System.out.println((rockY+1));
+        System.out.print((char)(kingJ+65));
+        System.out.println((kingI+1));
+        System.out.print((char)(rockJ+65));
+        System.out.println((rockI+1));
+    }
+
+    static void move(int i, int j) {
+        if (kingI + i == rockI && kingJ + j == rockJ) {
+            if (rockI + i >= 0 && rockJ + j >= 0 && rockI + i < 8 && rockJ + j < 8) {
+                kingI += i;
+                rockI += i;
+                kingJ += j;
+                rockJ += j;
+            }
+        } else {
+            if (kingI + i >= 0 && kingJ + j >= 0 && kingI + i < 8 && kingJ + j < 8) {
+                kingI += i;
+                kingJ += j;
+            }
+        }
     }
 }
