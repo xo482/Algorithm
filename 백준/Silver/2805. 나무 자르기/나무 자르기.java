@@ -36,17 +36,13 @@ public class Main {
                 height = (height + MIN) / 2;
             }
             if (sum > M) {
-                if (sum - cnt < M) {
-                    break;
-                }
+                if (sum - cnt < M) break;
                 MIN = height;
                 height = (height + MAX) / 2;
             }
-            if (sum == M) {
-                break;
-            }
+            if (sum == M) break;
+            
         }
-
         System.out.print(height);
     }
 }
