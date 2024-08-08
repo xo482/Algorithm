@@ -5,7 +5,6 @@ import java.util.StringTokenizer;
 
 public class Main {
     static int[][] pan;
-    static int cnt = 1;
     static int[][] box;
     static int n,w,b, h;
     static StringBuilder sb = new StringBuilder();
@@ -32,7 +31,7 @@ public class Main {
 
             }
 
-                go();
+            go();
 
         }
 
@@ -68,20 +67,11 @@ public class Main {
             }
 
             if (flag) {
-//                System.out.println("height = " + height);
                 for (int i = 0; i < h; i++) {
                     for (int j = 0; j < w; j++) {
                         box[height + i][j] = pan[i][j];
                     }
                 }
-
-//                for (int i = 0; i < b; i++) {
-//                    for (int j = 0; j < w; j++) {
-//                        System.out.print(box[i][j] + " ");
-//                    }
-//                    System.out.println();
-//                }
-//                System.out.println();
 
                 finalFlag = true;
                 break;
@@ -89,14 +79,6 @@ public class Main {
         }
 
         if (!finalFlag) {
-//            for (int i = 0; i < b; i++) {
-//                for (int j = 0; j < w; j++) {
-//                    System.out.print(box[i][j] + " ");
-//                }
-//                System.out.println();
-//            }
-//            System.out.println();
-//            System.out.println();
 
             boolean sex = false;
             for (int i = 0; i < b; i++) {
@@ -110,9 +92,6 @@ public class Main {
                 if (sex) break;
 
             }
-
-
-            cnt++;
 
             for (int i = 0; i < b; i++) {
                 for (int j = 0; j < w; j++) {
