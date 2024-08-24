@@ -7,8 +7,9 @@ public class Main {
     static StringBuilder sb = new StringBuilder();
     static StringTokenizer st;
     static int n, m;
-    static int[] inDegree; // -1은 방문처리
+    static int[] inDegree;
     static List<Integer>[] list;
+    static PriorityQueue<Integer> pq = new PriorityQueue<>();
 
     public static void main(String[] args) throws IOException {
         st = new StringTokenizer(br.readLine());
@@ -25,17 +26,18 @@ public class Main {
             inDegree[end]++;
         }
 
-        for (int i = 1; i < n + 1; i++) {
-            if (inDegree[i] == -1) continue;
-            if (inDegree[i] == 0) {
-                inDegree[i] = -1;
-                sb.append(i).append(" ");
+        for (int i = 1; i < n + 1; i++)
+            if (inDegree[i]==0)
+                pq.add(i);
 
-                if (!list[i].isEmpty()) {
-                    for (int nxt : list[i]) inDegree[nxt]--;
-                    i=0;
-                }
-            }
+        while (!pq.isEmpty()) {
+            int i = pq.poll();
+            inDegree[i] = -1;
+            sb.append(i).append(" ");
+
+            for (int nxt : list[i])
+                if (--inDegree[nxt] == 0)
+                    pq.add(nxt);
         }
 
         System.out.print(sb);
