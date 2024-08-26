@@ -1,48 +1,49 @@
 import java.io.*;
-import java.util.StringTokenizer;
+import java.util.*;
+
 
 public class Main {
-
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
     static int N, M;
-    static long sum=0;
-    static int[] arr;
-    static int MIN = 0;
-    static int MAX = 1_000_000_000;
-    static int height = 500_000_000;
+    static int[] tree;
 
     public static void main(String[] args) throws IOException {
         st = new StringTokenizer(br.readLine());
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
-        arr = new int[N];
+        tree = new int[N];
 
         st = new StringTokenizer(br.readLine());
-        for (int i = 0; i < N; i++) arr[i] = Integer.parseInt(st.nextToken());
+        for (int i = 0; i < N; i++) tree[i] = Integer.parseInt(st.nextToken());
+
+        int MIN = 0;
+        int MAX = 1_000_000_000;
+        int height = 0;
+
 
         while (true) {
-            sum = 0;
+            height = (MIN + MAX) / 2;
+            long sum = 0;
             int cnt = 0;
+
             for (int i = 0; i < N; i++) {
-                if (arr[i] > height) {
-                    sum += arr[i] - height;
+                if (tree[i] > height){
+                    sum += tree[i] - height;
                     cnt++;
                 }
             }
 
             if (sum < M) {
                 MAX = height;
-                height = (height + MIN) / 2;
             }
             if (sum > M) {
                 if (sum - cnt < M) break;
                 MIN = height;
-                height = (height + MAX) / 2;
             }
             if (sum == M) break;
-            
         }
-        System.out.print(height);
+
+        System.out.println(height);
     }
 }
