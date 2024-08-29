@@ -1,7 +1,7 @@
 import java.io.*;
 
 public class Main {
-    static long dp[][] = new long [1001][1001];
+    static int dp[][] = new int [1001][1001];
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
@@ -12,10 +12,10 @@ public class Main {
         int N = Integer.parseInt(input[0]);
         int K = Integer.parseInt(input[1]);
 
-        long result = Combination(N, K);
+        int result = Combination(N, K);
         System.out.println(result);
     }
-    static long Combination(int n,int r){
+    static int Combination(int n,int r){
         int MOD = 10007;
         if(dp[n][r]>0){
             return dp[n][r];
