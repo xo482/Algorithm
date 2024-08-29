@@ -1,24 +1,28 @@
 import java.io.*;
-import java.math.BigInteger;
-import java.util.*;
 
 public class Main {
+    static long dp[][] = new long [1001][1001];
     public static void main(String[] args) throws IOException {
         BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        int K = Integer.parseInt(st.nextToken());
+        BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
+        //(n/k)는 nck
+        //ncr = n-1cr + n-1cr-1
 
-        BigInteger answer = new BigInteger("1");
+        String[] input = br.readLine().split(" ");
+        int N = Integer.parseInt(input[0]);
+        int K = Integer.parseInt(input[1]);
 
-        for (int i = K+1; i <= N; i++) {
-            answer = answer.multiply(BigInteger.valueOf(i));
+        long result = Combination(N, K);
+        System.out.println(result);
+    }
+    static long Combination(int n,int r){
+        int MOD = 10007;
+        if(dp[n][r]>0){
+            return dp[n][r];
+        }else if(n==r || r==0){
+            return dp[n][r] = 1;
+        }else{
+            return dp[n][r]=(Combination(n-1,r) + Combination(n-1,r-1)) % MOD;
         }
-
-        for (int i = 1; i <= N-K; i++) {
-            answer = answer.divide(BigInteger.valueOf(i));
-        }
-
-        System.out.println(answer.remainder(BigInteger.valueOf(10007)));
     }
 }
