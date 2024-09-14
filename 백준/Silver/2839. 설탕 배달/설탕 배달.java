@@ -1,24 +1,22 @@
 import java.io.*;
 
 public class Main {
-    public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int N = Integer.parseInt(br.readLine());
-        int i = N / 5 + 1;
-        int sum = 0;
-        boolean flag = false;
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static int N;
 
-        while (i-- > 0)
-            if ((N - (5 * i)) % 3 == 0) {
-                flag = true;
+    public static void main(String[] args) throws IOException {
+        N = Integer.parseInt(br.readLine());
+        int answer = -1;
+        int start = N / 5;
+
+        while (start > -1) {
+            if ((N - start * 5) % 3 == 0) {
+                answer = start + ((N - start * 5) / 3);
                 break;
             }
-
-        if (flag) {
-            sum = i;
-            sum += (N - (5 * i)) / 3;
-            System.out.print(sum);
-        } else System.out.print(-1);
-
+            start--;
+        }
+        
+        System.out.println(answer);
     }
 }
