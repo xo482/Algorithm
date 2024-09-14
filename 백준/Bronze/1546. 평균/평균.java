@@ -1,32 +1,25 @@
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.util.StringTokenizer;
-import java.io.IOException;
+import java.io.*;
+import java.util.*;
 
+// 1에서 N까지 가는데 필수로 지나가야하는 v1, v2가 주어진다.
+public class Main {
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static int N;
+    static double max = 0, sum = 0;
+    static int[] list;
 
-public class Main{
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int length = Integer.parseInt(br.readLine());
-        double[] arr = new double[length];
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        double totalScore = 0, max = 0;
-        
-        // 배열 초기화 & 최댓값 구하기
-        for(int i=0;i<length;i++){
-            double val = Double.parseDouble(st.nextToken());
-            arr[i] = val;
-            
-            if(val > max) max = val;
+        N = Integer.parseInt(br.readLine());
+        list = new int[N];
+
+        st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            list[i] = Integer.parseInt(st.nextToken());
+            max = Math.max(max, list[i]);
+            sum += list[i];
         }
-        
-        // 점수 변환 & 점수 합 구하기
-        for(int i=0;i<length;i++){
-            arr[i] = arr[i] / max * 100;
-            totalScore += arr[i];
-        }
-        
-        // 평균 출력
-        System.out.print(totalScore / length);
+
+        System.out.println(sum / max * 100 / N);
     }
 }
