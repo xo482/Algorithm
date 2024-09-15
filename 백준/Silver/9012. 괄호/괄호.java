@@ -1,26 +1,27 @@
 import java.io.*;
+import java.util.*;
 
 public class Main {
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringBuilder sb = new StringBuilder();
+    static StringTokenizer st;
+    static int T;
+
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringBuilder sb = new StringBuilder();
-        int T = Integer.parseInt(br.readLine());
-
+        T = Integer.parseInt(br.readLine());
         while (T-- > 0) {
-            int x = 0;
-            char[] chars = br.readLine().toCharArray();
+            char[] array = br.readLine().toCharArray();
+            int cnt = 0;
 
-            for (char c : chars) {
-                if (c == '(') x++;
-                else x--;
-
-                if (x < 0) break;
+            for (int i = 0; i < array.length; i++) {
+                if (array[i] == '(') cnt++;
+                if (array[i] == ')') cnt--;
+                if (cnt < 0) break;
             }
-
-            if (x == 0) sb.append("YES\n");
-            else sb.append("NO\n");
+            if (cnt == 0) sb.append("YES");
+            else sb.append("NO");
+            sb.append("\n");
         }
-
-        System.out.print(sb);
+        System.out.println(sb.toString());
     }
 }
