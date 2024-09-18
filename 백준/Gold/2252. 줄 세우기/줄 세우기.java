@@ -1,51 +1,42 @@
 import java.io.*;
 import java.util.*;
 
-class Main {
+// 앞에 선다 -> 먼저 나온다
+public class Main {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static int N,M;
+    static StringTokenizer st;
+    static int N, M;
+    static int[] inDegree;
     static List<Integer>[] list;
-    static int[] arr;
-    static ArrayDeque<Integer> Q = new ArrayDeque<>();
     static StringBuilder sb = new StringBuilder();
 
     public static void main(String[] args) throws IOException {
-        String[] s = br.readLine().split(" ");
-        N = Integer.parseInt(s[0]);
-        M = Integer.parseInt(s[1]);
-        arr = new int[N];
-        list = new List[N];
-        for (int i = 0; i < N; i++) list[i] = new ArrayList<>();
+        st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        inDegree = new int[N + 1];
+        list = new List[N + 1];
+        for (int i = 0; i < N + 1; i++) list[i] = new ArrayList<>();
 
         while (M-- > 0) {
-            s = br.readLine().split(" ");
-            int start = Integer.parseInt(s[0])-1;
-            int end = Integer.parseInt(s[1])-1;
-            list[start].add(end);
-            arr[end] += 1;
+            st = new StringTokenizer(br.readLine());
+            int A = Integer.parseInt(st.nextToken());
+            int B = Integer.parseInt(st.nextToken());
+            inDegree[B]++;
+            list[A].add(B);
         }
 
-        for (int i = 0; i < N; i++) {
-            if (arr[i] == 0) {
-                Q.addLast(i);
-                arr[i] = -1;
-            }
-        }
+        ArrayDeque<Integer> Q = new ArrayDeque<>();
+        for (int i = 1; i < N + 1; i++) if (inDegree[i] == 0) Q.addLast(i);
 
         while (!Q.isEmpty()) {
             int now = Q.removeFirst();
-            sb.append(now+1).append(" ");
+            sb.append(now).append(" ");
 
-            for (int i : list[now]) {
-                if (arr[i] == 1) {
-                    Q.addLast(i);
-                    arr[i] = -1;
-                } else {
-                    arr[i] -= 1;
-                }
+            for (int next : list[now]) {
+                if (--inDegree[next] == 0) Q.addLast(next);
             }
         }
-
         System.out.println(sb);
     }
 }
