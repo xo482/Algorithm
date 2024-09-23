@@ -2,23 +2,23 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static int X = 64;
+    static int sum = 64;
+    static int answer;
+    static int cnt = 1;
+
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        int X = Integer.parseInt(br.readLine());
-        int cnt = 0;
-        int i=0;
+        answer = Integer.parseInt(br.readLine());
 
         while (X > 0) {
-            int now = 0;
-            i = 0;
-
-            while (now <= X) {
-                now = (int) Math.pow(2, ++i);
-            }
-
-            now /= 2;
-            X -= now;
+            if(answer == sum) break;
+            X = X / 2;
             cnt++;
+            if (answer <= sum - X) {
+                sum = sum - X;
+                cnt--;
+            }
         }
 
         System.out.println(cnt);
