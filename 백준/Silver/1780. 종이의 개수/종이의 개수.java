@@ -24,6 +24,13 @@ public class Main {
     }
 
     static void dfs(int r, int c, int length) {
+        if (length == 1) {
+            if (arr[r][c] == -1) minusCnt++;
+            if (arr[r][c] == 0) zeroCnt++;
+            if (arr[r][c] == 1) plusCnt++;
+            return;
+        }
+
         int standard = arr[r][c];
         boolean flag = false;
 
