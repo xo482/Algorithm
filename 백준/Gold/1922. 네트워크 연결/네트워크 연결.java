@@ -1,61 +1,51 @@
 import java.io.*;
 import java.util.*;
 
-
 public class Main {
+
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
-    static int N, M;
-    static List<Node>[] list;
-    static boolean[] visited;
+    static int N, M, sum = 0;
+    static PriorityQueue<Case> Q = new PriorityQueue<Case>((o1, o2) -> Integer.compare(o1.cost, o2.cost));
+    static int[] isParent;
 
     public static void main(String[] args) throws IOException {
         N = Integer.parseInt(br.readLine());
         M = Integer.parseInt(br.readLine());
+        isParent = new int[N+1];
+        for (int i = 0; i <N+1; i++) isParent[i] = i;
 
-        visited = new boolean[N + 1];
-        list = new List[N + 1];
-        for (int i = 1; i < N + 1; i++) list[i] = new ArrayList<>();
-
-        for (int i = 0; i < M; i++) {
+        while (M-- > 0) {
             st = new StringTokenizer(br.readLine());
-            int a = Integer.parseInt(st.nextToken());
-            int b = Integer.parseInt(st.nextToken());
-            int c = Integer.parseInt(st.nextToken());
-
-            list[a].add(new Node(b, c));
-            list[b].add(new Node(a, c));
+            Q.add(new Case(Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())));
         }
-
-        System.out.println(prim(1));
-    }
-
-    private static int prim(int start) {
-        PriorityQueue<Node> Q = new PriorityQueue<>((o1, o2) -> Integer.compare(o1.cost, o2.cost));
-        Q.add(new Node(start, 0));
-        int total = 0;
 
         while (!Q.isEmpty()) {
-            Node curNode = Q.poll();
-            if (visited[curNode.v]) continue;
+            Case now = Q.poll();
+            int aP = findParent(now.a);
+            int bP = findParent(now.b);
 
-            visited[curNode.v] = true;
-            total += curNode.cost;
-
-            for (Node nxtNode : list[curNode.v])
-                if (!visited[nxtNode.v])
-                    Q.add(nxtNode);
+            if (aP == bP) continue;
+            isParent[aP] = bP;
+            sum += now.cost;
         }
 
-        return total;
+        System.out.println(sum);
     }
 
-    static class Node {
-        int v;
+    static int findParent(int node) {
+        if (node == isParent[node]) return node;
+        return isParent[node] = findParent(isParent[node]);
+    }
+
+    static class Case {
+        int a;
+        int b;
         int cost;
 
-        public Node(int v, int cost) {
-            this.v = v;
+        public Case(int a, int b, int cost) {
+            this.a = a;
+            this.b = b;
             this.cost = cost;
         }
     }
