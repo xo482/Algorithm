@@ -10,7 +10,6 @@ public class Main {
     static StringTokenizer st;
     static int N, M;
     static int[][] board;
-    static boolean[][] visited;
     static boolean[] used;
     static int max;
     static int[] dr = new int[]{-1, 1, 0, 0};
@@ -22,7 +21,6 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
         board = new int[N][M];
-        visited = new boolean[N][M];
         used = new boolean[26];
 
         for (int i = 0; i < N; i++) {
@@ -31,7 +29,6 @@ public class Main {
                 board[i][j] = charArray[j] - 'A';
         }
 
-        visited[0][0] = true;
         used[board[0][0]] = true;
         dfs(0, 0, 1);
         System.out.println(max);
@@ -45,14 +42,10 @@ public class Main {
             int nr = r + dr[i];
             int nc = c + dc[i];
             if (nr < 0 || nc < 0 || nr >= N || nc >= M) continue;
-            if (visited[nr][nc] || used[board[nr][nc]]) continue;
+            if (used[board[nr][nc]]) continue;
 
-            visited[nr][nc] = true;
             used[board[nr][nc]] = true;
-
             dfs(nr, nc, cnt + 1);
-
-            visited[nr][nc] = false;
             used[board[nr][nc]] = false;
         }
     }
