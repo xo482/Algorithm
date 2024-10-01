@@ -31,7 +31,7 @@ public class Main {
             int bP = findParent(now.b);
 
             if (now.cost < 0) {
-                isParent[aP] = isParent[bP];
+                isParent[aP] = bP;
                 total -= now.cost;
                 continue;
             }
