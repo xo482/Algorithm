@@ -1,44 +1,55 @@
 import java.io.*;
 import java.util.*;
 
-// 40분 시작
-
 public class Main {
+
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static int N, K;
+    static int INF = 100_001;
+    static int[] board = new int[100_001];
+    static PriorityQueue<Node> Q = new PriorityQueue<>((o1, o2) -> Integer.compare(o1.time, o2.time));
+
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        String[] split = br.readLine().split(" ");
-        int N = Integer.parseInt(split[0]);
-        int K = Integer.parseInt(split[1]);
-        int[] arr = new int[100_001];
-        boolean[] visited = new boolean[100_001];
+        st = new StringTokenizer(br.readLine());
+        N = Integer.parseInt(st.nextToken());
+        K = Integer.parseInt(st.nextToken());
+        Arrays.fill(board, INF);
 
-        // init
-        for (int i = 0; i < 100_001; i++)
-            arr[i] = 100_001;
+        Q.add(new Node(N, 0));
+        board[N] = 0;
 
-        ArrayDeque<Integer> Q = new ArrayDeque<>();
-        arr[N] = 0;
-        Q.add(N);
+        while (!Q.isEmpty()) {
+            Node now = Q.poll();
 
-        while(!Q.isEmpty()) {
-            int now = Q.removeFirst();
-            if (now < 100_001 && now >= 0 && !visited[now]) {
-                visited[now] = true;
-                if (now+1 < 100_001) {
-                    arr[now + 1] = Math.min(arr[now + 1], arr[now] + 1);
-                    Q.addLast(now + 1);
-                }
-                if (now-1 >= 0){
-                    arr[now-1] = Math.min(arr[now-1], arr[now] + 1);
-                    Q.addLast(now - 1);
-                }
-                if (now*2 < 100_001){
-                    arr[now*2] = Math.min(arr[now*2], arr[now]);
-                    Q.addLast(now * 2);
-                }
+            if (board[now.v] < now.time) continue;
+
+            board[now.v] = now.time;
+            if (now.v - 1 >= 0 && board[now.v - 1] > board[now.v] + 1) {
+                board[now.v - 1] = board[now.v] + 1;
+                Q.add(new Node(now.v - 1, board[now.v - 1]));
+            }
+            if (now.v + 1 < 100_001 && board[now.v + 1] > board[now.v] + 1) {
+                board[now.v + 1] = board[now.v] + 1;
+                Q.add(new Node(now.v + 1, board[now.v + 1]));
+            }
+
+            if (now.v * 2 < 100_001 && board[now.v * 2] > board[now.v]) {
+                board[now.v * 2] = board[now.v];
+                Q.add(new Node(now.v * 2, board[now.v * 2]));
             }
         }
 
-        System.out.println(arr[K]);
+        System.out.println(board[K]);
+    }
+
+    static class Node {
+        int v;
+        int time;
+
+        public Node(int v, int time) {
+            this.v = v;
+            this.time = time;
+        }
     }
 }
