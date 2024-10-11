@@ -1,10 +1,12 @@
 import java.io.*;
 import java.util.*;
 
+
+// 스트링빌더 사용하면 틀립니다.
+
 public class Main {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
-    static StringBuilder sb = new StringBuilder();
     static int N, endDepth, end;
     static Map<Integer, Integer[]> map = new HashMap<>();
 
