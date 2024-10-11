@@ -1,67 +1,53 @@
 import java.io.*;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.StringTokenizer;
+import java.util.*;
 
 public class Main {
-
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
     static StringBuilder sb = new StringBuilder();
-    static Map<String, Node> map;
+    static int N;
+    static Map<Character, Character[]> map = new HashMap<>();
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st = new StringTokenizer(br.readLine());
-        int N = Integer.parseInt(st.nextToken());
-        map = new HashMap<>();
+        N = Integer.parseInt(br.readLine());
 
-        while (N-- > 0) {
-            st = new StringTokenizer(br.readLine());
+        for (int i = 0; i < N; i++) {
+            String line = br.readLine();
+            char P = line.charAt(0);
+            char L = line.charAt(2);
+            char R = line.charAt(4);
 
-            String s = st.nextToken();
-            map.put(s, new Node(s));
-            map.get(s).left = st.nextToken();
-            map.get(s).right = st.nextToken();
+            map.put(P, new Character[]{L, R});
         }
 
-        // 전위 탐색
-        map.get("A").preorder();
-        System.out.println(sb);
+        preorder('A');
+        sb.append("\n");
+        inorder('A');
+        sb.append("\n");
+        postorder('A');
+        sb.append("\n");
 
-        sb = new StringBuilder();
-        map.get("A").inorder();
-        System.out.println(sb);
-
-        sb = new StringBuilder();
-        map.get("A").postorder();
         System.out.println(sb);
     }
 
-    static class Node {
-        public String name;
-        public String left = null;
-        public String right = null;
-
-        public Node(String name) {
-            this.name = name;
-        }
-
-        public void preorder() {
-            sb.append(name);
-            if (!left.equals(".")) map.get(left).preorder();
-            if (!right.equals(".")) map.get(right).preorder();
-        }
-
-        public void inorder() {
-            if (!left.equals(".")) map.get(left).inorder();
-            sb.append(name);
-            if (!right.equals(".")) map.get(right).inorder();
-        }
-
-        public void postorder() {
-            if (!left.equals(".")) map.get(left).postorder();
-            if (!right.equals(".")) map.get(right).postorder();
-            sb.append(name);
-        }
+    private static void preorder(char node) {
+        sb.append(node);
+        Character[] childArr = map.get(node);
+        if (childArr[0] != '.') preorder(childArr[0]);
+        if (childArr[1] != '.') preorder(childArr[1]);
     }
 
+    private static void inorder(char node) {
+        Character[] childArr = map.get(node);
+        if (childArr[0] != '.') inorder(childArr[0]);
+        sb.append(node);
+        if (childArr[1] != '.') inorder(childArr[1]);
+    }
+
+    private static void postorder(char node) {
+        Character[] childArr = map.get(node);
+        if (childArr[0] != '.') postorder(childArr[0]);
+        if (childArr[1] != '.') postorder(childArr[1]);
+        sb.append(node);
+    }
 }
