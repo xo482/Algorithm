@@ -2,68 +2,75 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
+
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringBuilder sb = new StringBuilder();
+    static int N, M, K;
+    static boolean[][] board;
+    static int cnt = 0;
+    static int[] dr = new int[]{1, -1, 0, 0};
+    static int[] dc = new int[]{0, 0, -1, 1};
+
+    static PriorityQueue<Integer> pq = new PriorityQueue<>();
+
     public static void main(String[] args) throws IOException {
-        int[] dr = new int[]{1, -1, 0, 0};
-        int[] dc = new int[]{0, 0, -1, 1};
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
         StringTokenizer st = new StringTokenizer(br.readLine());
-        StringBuilder sb = new StringBuilder();
-        int N = Integer.parseInt(st.nextToken());
-        int M = Integer.parseInt(st.nextToken());
-        int K = Integer.parseInt(st.nextToken());
-        int[][] adj = new int[N][M];
-        ArrayList<Integer> list = new ArrayList<>();
-        int cnt = 0;
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        K = Integer.parseInt(st.nextToken());
+        board = new boolean[N][M];
 
         while (K-- > 0) {
             st = new StringTokenizer(br.readLine());
-            int c1 = Integer.parseInt(st.nextToken());
             int r1 = Integer.parseInt(st.nextToken());
-            int c2 = Integer.parseInt(st.nextToken());
+            int c1 = Integer.parseInt(st.nextToken());
             int r2 = Integer.parseInt(st.nextToken());
+            int c2 = Integer.parseInt(st.nextToken());
 
-            for (int i = r1 ; i < r2; i++) {
+            for (int i = r1; i < r2; i++) {
                 for (int j = c1; j < c2; j++) {
-                    adj[i][j] = 1;
+                    board[j][i] = true; // 방문처리
                 }
             }
         }
 
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < M; j++) {
-                if (adj[i][j] == 0) {
-                    adj[i][j] = 1;
+        for (int i = 0; i < N; i++)
+            for (int j = 0; j < M; j++)
+                if (!board[i][j]) {
+                    pq.add(bfs(i,j));
                     cnt++;
-                    int area = 0;
-                    ArrayDeque<int[]> Q = new ArrayDeque<>();
-                    Q.addLast(new int[]{i, j});
-
-                    while (!Q.isEmpty()) {
-                        int[] ints = Q.removeFirst();
-                        int r = ints[0];
-                        int c = ints[1];
-                        area++;
-
-                        for (int k = 0; k < 4; k++) {
-                            int nr = r + dr[k];
-                            int nc = c + dc[k];
-                            if (nr >= 0 && nr < N && nc >= 0 && nc < M && adj[nr][nc] == 0) {
-                                adj[nr][nc] = 1;
-                                Q.addLast(new int[]{nr, nc});
-                            }
-                        }
-                    }
-                    list.add(area);
                 }
-            }
-        }
 
         sb.append(cnt).append("\n");
-        Collections.sort(list);
-        for (Integer i : list) {
-            sb.append(i).append(" ");
+        while (!pq.isEmpty()) sb.append(pq.poll()).append(" ");
+
+        System.out.println(sb.toString());
+    }
+
+    static int bfs(int r, int c) {
+        int extent = 0;
+        ArrayDeque<int[]> Q = new ArrayDeque<>();
+        Q.add(new int[]{r, c});
+
+        while (!Q.isEmpty()) {
+            int[] now = Q.removeFirst();
+            r = now[0];
+            c = now[1];
+
+            if (board[r][c]) continue;
+
+            board[r][c] = true;
+            extent++;
+
+            for (int i = 0; i < 4; i++) {
+                int nr = r + dr[i];
+                int nc = c + dc[i];
+
+                if (nr >= 0 && nr < N && nc >= 0 && nc < M && !board[nr][nc])
+                    Q.addLast(new int[]{nr, nc});
+            }
         }
 
-        System.out.print(sb);
+        return extent;
     }
 }
