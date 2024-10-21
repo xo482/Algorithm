@@ -6,13 +6,13 @@ public class Main {
     static StringBuilder sb = new StringBuilder();
     static StringTokenizer st;
     static int N;
-    static int[] arr;
-    static int[] answer = new int[3];
+    static long[] arr;
+    static long[] answer = new long[3];
     static long min = Long.MAX_VALUE;
 
     public static void main(String[] args) throws IOException {
         N = Integer.parseInt(br.readLine());
-        arr = new int[N];
+        arr = new long[N];
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) arr[i] = Integer.parseInt(st.nextToken());
@@ -27,7 +27,7 @@ public class Main {
                 int mid = 0;
                 while (start <= end) {
                     mid = (start + end) / 2;
-                    long sum = (long)arr[idx1] + (long)arr[idx2] + (long)arr[mid];
+                    long sum = arr[idx1] + arr[idx2] + arr[mid];
 
                     if (sum > 0) {
                         end = mid - 1;
@@ -37,15 +37,15 @@ public class Main {
                 }
 
                 int idx3 = mid;
-                if (idx2 != idx3-1 && Math.abs((long)arr[idx1] + (long)arr[idx2] + (long)arr[idx3]) > Math.abs((long)arr[idx1] + (long)arr[idx2] + (long)arr[idx3 - 1])) {
+                if (idx2 != idx3-1 && Math.abs(arr[idx1] + arr[idx2] + arr[idx3]) > Math.abs(arr[idx1] + arr[idx2] + arr[idx3 - 1])) {
                     idx3--;
                 }
-                if (N != idx3+1 && Math.abs((long)arr[idx1] + (long)arr[idx2] + (long)arr[idx3]) > Math.abs((long)arr[idx1] + (long)arr[idx2] + (long)arr[idx3 + 1])) {
+                if (N != idx3+1 && Math.abs(arr[idx1] + arr[idx2] + arr[idx3]) > Math.abs(arr[idx1] + arr[idx2] + arr[idx3 + 1])) {
                     idx3++;
                 }
 
-                if (min > Math.abs((long)arr[idx1] + (long)arr[idx2] + (long)arr[idx3])) {
-                    min = Math.abs((long)arr[idx1] + (long)arr[idx2] + (long)arr[idx3]);
+                if (min > Math.abs(arr[idx1] + arr[idx2] + arr[idx3])) {
+                    min = Math.abs(arr[idx1] + arr[idx2] + arr[idx3]);
                     answer[0] = arr[idx1];
                     answer[1] = arr[idx2];
                     answer[2] = arr[idx3];
