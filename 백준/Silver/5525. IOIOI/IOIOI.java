@@ -3,33 +3,28 @@ import java.util.*;
 
 public class Main {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static int N, M;
-    static char[] filter, arr;
+    static char[] arr;
+    static int[] dp;
+    static int N, M, standard;
 
     public static void main(String[] args) throws IOException {
         N = Integer.parseInt(br.readLine());
         M = Integer.parseInt(br.readLine());
+        standard = 2 * N + 1;
         arr = br.readLine().toCharArray();
+        dp = new int[M];
+        Arrays.fill(dp, 1);
 
-        filter = new char[2 * N + 1];
-        for (int i = 0; i < 2*N+1; i++) {
-            if (i%2 == 0) filter[i] = 'I';
-            else filter[i] = 'O';
-        }
+        for (int i = 1; i < M; i++)
+            if (arr[i] != arr[i-1])
+                dp[i] = dp[i-1] + 1;
 
         int cnt = 0;
-        for (int i = 0; i <= M - (2 * N + 1); i++) {
+        for (int i = standard-1; i < M; i++)
+            if (dp[i] >= standard && arr[i] == 'I')
+                cnt++;
 
-            boolean flag = false;
 
-            for (int j = 0; j < 2 * N + 1; j++) {
-                if (filter[j] != arr[i+j]){
-                    flag = true; break;
-                }
-            }
-
-            if (!flag) cnt++;
-        }
         System.out.println(cnt);
     }
 }
