@@ -25,17 +25,15 @@ public class Main {
 
                 for (int k = 0; k < 3; k++) {
                     if (dp[i][j][k] == 0) continue;
+                    if (i+1 < N && j+1 < N && board[i+1][j+1] == 0 && board[i][j+1] == 0 && board[i+1][j] == 0) dp[i+1][j+1][1] += dp[i][j][k];
                     if (k==0) {
-                        if (i+1 < N && j+1 < N && board[i+1][j+1] == 0 && board[i][j+1] == 0 && board[i+1][j] == 0) dp[i+1][j+1][1] += dp[i][j][k];
                         if (j+1 < N && board[i][j+1] == 0) dp[i][j+1][0] += dp[i][j][k];
                     }
                     if (k==1) {
-                        if (i+1 < N && j+1 < N && board[i+1][j+1] == 0 && board[i][j+1] == 0 && board[i+1][j] == 0) dp[i+1][j+1][1] += dp[i][j][k];
                         if (j+1 < N && board[i][j+1] == 0) dp[i][j+1][0] += dp[i][j][k];
                         if (i+1 < N && board[i+1][j] == 0) dp[i+1][j][2] += dp[i][j][k];
                     }
                     if (k==2) {
-                        if (i+1 < N && j+1 < N && board[i+1][j+1] == 0 && board[i][j+1] == 0 && board[i+1][j] == 0) dp[i+1][j+1][1] += dp[i][j][k];
                         if (i+1 < N && board[i+1][j] == 0) dp[i+1][j][2] += dp[i][j][k];
                     }
                 }
