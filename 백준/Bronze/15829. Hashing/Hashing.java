@@ -13,7 +13,13 @@ public class Main {
 
         long sum = 0;
         for (int i = 0; i < L; i++) {
-            sum += ((str.charAt(i) - 'a' + 1) * (long)Math.pow(R, i));
+            long num = (str.charAt(i) - 'a' + 1);
+
+            for (int j = 0; j < i; j++) {
+                num = num * R;
+                if (num > M) num %= M;
+            }
+            sum += num;
             if (sum > M) sum %= M;
         }
 
