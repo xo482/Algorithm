@@ -3,7 +3,6 @@ import java.io.*;
 
 public class Main {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-    static BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
     static StringTokenizer st;
     static StringBuilder sb = new StringBuilder();
     static int N, K;
@@ -37,14 +36,6 @@ public class Main {
                 int a = Integer.parseInt(st.nextToken());
                 int b = Integer.parseInt(st.nextToken());
 
-//                for (int i = 1; i < 4 * N; i++) {
-//                    System.out.print(i + ": " + tree[i] + "    ");
-//                }
-//                System.out.println();
-//                System.out.println();
-//                System.out.println("cal = " + cal);
-
-
                 if (cal == 'C') {
                     if (b == 0) update(1, 1, N, a, 0);
                     if (b > 0) update(1, 1, N, a, 1);
@@ -52,7 +43,6 @@ public class Main {
                 }
                 if (cal == 'P') {
                     int result = mul(1, 1, N, a, b);
-//                    System.out.println("result = " + result);
 
                     if (result > 0) sb.append('+');
                     else if (result < 0) sb.append('-');
@@ -66,31 +56,21 @@ public class Main {
     }
 
     private static void update(int idx, int start, int end, int target, int value) {
-
         if (start == end) {
             tree[idx] = value;
             return;
         }
 
         int mid = (start + end) / 2;
-        if (start <= target && target <= mid) {
-            update(2*idx, start, mid, target, value);
-        }
-        if (mid+1 <= target && target <= end) {
-            update(2*idx+1, mid+1, end, target, value);
-        }
+        if (start <= target && target <= mid) update(2*idx, start, mid, target, value);
+        if (mid+1 <= target && target <= end) update(2*idx+1, mid+1, end, target, value);
 
         tree[idx] = tree[2*idx] * tree[2*idx+1];
     }
 
     private static int mul(int idx, int start, int end, int left, int right) {
-        if (start > right || end < left) {
-            return 1;
-        }
-
-        if (left <= start && end <= right) {
-            return tree[idx];
-        }
+        if (start > right || end < left) return 1;
+        if (left <= start && end <= right) return tree[idx];
 
         int mid = (start + end) / 2;
         int sumLeft = mul(2 * idx, start, mid, left, right);
@@ -99,21 +79,14 @@ public class Main {
     }
 
     private static void init(int idx, int start, int end) {
-//        System.out.print("idx = " + idx);
-//        System.out.print(", start = " + start);
-//        System.out.println(", end = " + end);
-
         if (start == end) {
             tree[idx] = arr[start];
             return;
         }
 
         int mid = (start + end) / 2;
-        
         init(2 * idx, start, mid);
         init(2 * idx + 1, mid + 1, end);
-        
         tree[idx] = tree[2 * idx] * tree[2 * idx + 1];
     }
-
 }
