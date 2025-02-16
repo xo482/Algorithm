@@ -21,7 +21,8 @@ public class Main {
         init();
 
         dijkstra();
-        System.out.println(minShameList[B]);
+        if (minShameList[B] == INF) System.out.println(-1);
+        else System.out.println(minShameList[B]);
     }
 
     private static void dijkstra() {
