@@ -8,13 +8,13 @@ public class Main {
     static int N;
     static int min = 1000000000, max = -1000000000;
     static int[] nums, ops;
-    static char[] setting;
+    static int[] setting;
 
     public static void main(String[] args) throws IOException {
         N = Integer.parseInt(br.readLine());
 
         nums = new int[N];
-        setting = new char[N-1];
+        setting = new int[N-1];
         ops = new int[4];
 
         st = new StringTokenizer(br.readLine());
@@ -39,14 +39,9 @@ public class Main {
         for (int i = 0; i < 4; i++) {
             if (ops[i] == 0) continue;
 
-            if (i == 0) setting[depth] = '+';
-            if (i == 1) setting[depth] = '-';
-            if (i == 2) setting[depth] = '*';
-            if (i == 3) setting[depth] = '/';
+            setting[depth] = i;
             ops[i]--;
-
             tracking(depth+1);
-
             ops[i]++;
         }
     }
@@ -54,10 +49,10 @@ public class Main {
     static int calculate() {
         int answer = nums[0];
         for (int i = 1; i < N; i++) {
-            if (setting[i-1] == '+') answer = answer + nums[i];
-            if (setting[i-1] == '-') answer = answer - nums[i];
-            if (setting[i-1] == '*') answer = answer * nums[i];
-            if (setting[i-1] == '/') answer = answer / nums[i];
+            if (setting[i-1] == 0) answer += nums[i];
+            else if (setting[i-1] == 1) answer -= nums[i];
+            else if (setting[i-1] == 2) answer *= nums[i];
+            else answer /= nums[i];
         }
         return answer;
     }
