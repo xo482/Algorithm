@@ -1,8 +1,5 @@
 def solution(price, money, count):
-    p = 0
-    while count > 0:
-        p += count*price
-        count-=1
+    p = price*(count*(count+1))/2
     
     if p > money:
         return p-money
