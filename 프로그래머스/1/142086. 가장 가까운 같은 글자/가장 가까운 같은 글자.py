@@ -4,10 +4,8 @@ def solution(s):
     d = {}
     for idx in range(len(s)):
         key = s[idx]
-        
-        if key not in d: ans.append(-1)
-        else: ans.append(idx-d[key])
-        
+        if key not in d: s[idx] = -1
+        else: s[idx] = idx-d[key]
         d[key] = idx
     
-    return ans
+    return s
