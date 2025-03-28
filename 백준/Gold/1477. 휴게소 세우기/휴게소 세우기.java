@@ -32,6 +32,6 @@ public class Main {
             if (M <= count) start = mid;
             else end = mid;
         }
-        System.out.println(start + 1);
+        System.out.println(end);
     }
 }
