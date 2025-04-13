@@ -4,23 +4,23 @@ import java.io.*;
 public class Main {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
-    static long N, M;
-    static long[] table;
-    static long min = Long.MAX_VALUE;
+    static int N, M;
+    static int[] table;
+    static int min = Integer.MAX_VALUE;
 
     public static void main(String[] args) throws IOException {
         st = new StringTokenizer(br.readLine());
-        N = Long.parseLong(st.nextToken());
-        M = Long.parseLong(st.nextToken());
-        table = new long[(int)N];
+        N = Integer.parseInt(st.nextToken());
+        M = Integer.parseInt(st.nextToken());
+        table = new int[N];
 
         for (int i = 0; i < N; i++) {
-            table[i] = Long.parseLong(br.readLine());
+            table[i] = Integer.parseInt(br.readLine());
             min = Math.min(min, table[i]);
         }
 
         long start = 0;
-        long end = M*min;
+        long end = (long) M * min;
         while (start + 1 < end) {
             long mid = (start + end) / 2;
 
