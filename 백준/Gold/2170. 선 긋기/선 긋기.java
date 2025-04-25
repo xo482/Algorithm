@@ -6,34 +6,33 @@ public class Main {
     static StringTokenizer st;
     static int N;
     static int total = 0;
-    static PriorityQueue<Integer> sQ = new PriorityQueue<>();
-    static PriorityQueue<Integer> eQ = new PriorityQueue<>();
+    static PriorityQueue<int[]> Q = new PriorityQueue<>(new Comparator<int[]>() {
+        @Override
+        public int compare(int[] o1, int[] o2) {
+            return o1[0] - o2[0];
+        }
+    });
 
     public static void main(String[] args) throws IOException {
         N = Integer.parseInt(br.readLine());
         for (int i = 0; i < N; i++) {
             st = new StringTokenizer(br.readLine());
-            sQ.add(Integer.parseInt(st.nextToken()));
-            eQ.add(Integer.parseInt(st.nextToken()));
+            Q.add(new int[]{Integer.parseInt(st.nextToken()), Integer.parseInt(st.nextToken())});
         }
 
-        int start = sQ.poll();
-        int end = eQ.poll();
-        while (!sQ.isEmpty() && !eQ.isEmpty()) {
+        int[] now = Q.poll();
+        while (!Q.isEmpty()) {
 
-            int nxtStart = sQ.poll();
-            int nxtEnd = eQ.poll();
-
-            if (nxtStart > end) {
-                total += end-start;
-                start = nxtStart;
+            int[] nxt = Q.poll();
+            if (nxt[0] > now[1]) {
+                total += now[1]-now[0];
+                now[0] = nxt[0];
             }
 
-            end = nxtEnd;
+            now[1] = Math.max(now[1], nxt[1]);
         }
 
-        total += end-start;
+        total += now[1]-now[0];
         System.out.println(total);
     }
-
 }
