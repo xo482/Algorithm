@@ -2,69 +2,70 @@ import java.io.*;
 import java.util.*;
 
 public class Main {
-	static int total;
-	static List<Node>[] list;
-	static boolean[] visited;
-	static class Node implements Comparable<Node>{
-		int to;
-		int value;
-		
-		public Node(int to, int value) {
-			this.to = to;
-			this.value = value;
-		}
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static int V, E;
+    static List<Node>[] list;
+    static boolean[] visited;
 
-		@Override
-		public int compareTo(Node o) {
-			return this.value - o.value;
-		}
-	}
-	
-	public static void main(String[] args) throws IOException{
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		StringTokenizer st = new StringTokenizer(br.readLine());
-		int v = Integer.parseInt(st.nextToken());
-		int e = Integer.parseInt(st.nextToken());
-		
-		list = new ArrayList[v+1];
-		visited = new boolean[v+1];
-		for(int i=1; i<v+1; i++) {
-			list[i] = new ArrayList<>();
-		}
-		
-		for(int i=0; i<e; i++) {
-			st = new StringTokenizer(br.readLine());
-			int a = Integer.parseInt(st.nextToken());
-			int b = Integer.parseInt(st.nextToken());
-			int w = Integer.parseInt(st.nextToken());
-			list[a].add(new Node(b,w));
-			list[b].add(new Node(a,w));
-		}
-		
-		prim(1);
-		System.out.println(total);
-	}
-	
-	static void prim(int start) {
-		Queue<Node> pq = new PriorityQueue<>();
-		
-		pq.add(new Node(start,0));
-		while(!pq.isEmpty()) {
-			Node p = pq.poll();
-			int node = p.to;
-			int weight = p.value;
-			
-			if(visited[node]) continue;
-			// 선택한 간선의 정점으로부터 가장 낮은 가중치 갖는 정점 선택 
-			visited[node]= true;
-			total += weight;
-			
-			for(Node next : list[node]) {
-				if(!visited[next.to]) {
-					pq.add(next);
-				}
-			}
-		}
-		
-	}
+    public static void main(String[] args) throws IOException {
+        st = new StringTokenizer(br.readLine());
+        V = Integer.parseInt(st.nextToken());
+        E = Integer.parseInt(st.nextToken());
+        visited = new boolean[V + 1];
+        list = new List[V + 1];
+        for (int i = 1; i < V + 1; i++) list[i] = new ArrayList<>();
+
+        for (int i = 0; i < E; i++) {
+            st = new StringTokenizer(br.readLine());
+            int v1 = Integer.parseInt(st.nextToken());
+            int v2 = Integer.parseInt(st.nextToken());
+            int cost = Integer.parseInt(st.nextToken());
+
+            list[v1].add(new Node(v2, cost));
+            list[v2].add(new Node(v1, cost));
+        }
+
+        System.out.print(prim(1));
+    }
+
+    private static long prim(int start) {
+        PriorityQueue<Node> Q = new PriorityQueue<>();
+        long sum = 0;
+        Q.add(new Node(start, 0));
+
+        while (!Q.isEmpty()) {
+            Node nowNode = Q.poll();
+            int v = nowNode.v;
+            int cost = nowNode.cost;
+
+            if (visited[v]) continue;
+
+            visited[v] = true;
+            sum += cost;
+
+            for (Node nextNode : list[v]) {
+                if (!visited[nextNode.v]) {
+                    Q.add(nextNode);
+                }
+            }
+        }
+
+        return sum;
+    }
+
+    static class Node implements Comparable<Node> {
+        int v;
+        int cost;
+
+        public Node(int v, int cost) {
+            this.v = v;
+            this.cost = cost;
+        }
+
+        @Override
+        public int compareTo(Node o) {
+            return this.cost - o.cost;
+        }
+    }
 }
