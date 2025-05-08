@@ -8,7 +8,6 @@ public class Main {
     static int N, M;
     static int totalCost = 0, cnt = 0;
     static int[] parent;
-    static List<Edge>[] list;
     static PriorityQueue<Node> Q = new PriorityQueue<>(((o1, o2) -> o1.cost-o2.cost));
 
     public static void main(String[] args) throws IOException {
@@ -16,8 +15,6 @@ public class Main {
         N = Integer.parseInt(st.nextToken());
         M = Integer.parseInt(st.nextToken());
         parent = new int[N + 1];
-        list = new List[N + 1];
-        for (int i = 1; i <= N; i++) list[i] = new ArrayList<>();
         for (int i = 1; i <= N; i++) parent[i] = i;
 
         for (int i = 0; i < M; i++) {
@@ -36,9 +33,7 @@ public class Main {
                 int cost = Integer.parseInt(st.nextToken());
                 if (i >= j) continue;
                 if (i==1 || j==1) continue;
-
-                list[i].add(new Edge(j, cost));
-                list[j].add(new Edge(i, cost));
+                
                 Q.add(new Node(i, j, cost));
             }
         }
@@ -64,15 +59,6 @@ public class Main {
     private static int find(int node) {
         if (parent[node] == node) return node;
         return parent[node] = find(parent[node]);
-    }
-
-    static class Edge {
-        int v, cost;
-
-        public Edge(int v, int cost) {
-            this.v = v;
-            this.cost = cost;
-        }
     }
 
     static class Node {
