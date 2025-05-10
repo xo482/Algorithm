@@ -21,19 +21,17 @@ public class Main {
 
         dp[0] = arr[0];
         idx = 0;
-        for (int i = 1; i < N; i++) {
-            for (int j = 0; j < i; j++) {
-                dp[idx + i] = Math.max(dp[idx + i], dp[idx] + arr[idx + i]);
-                dp[idx + i+1] = Math.max(dp[idx + i+1], dp[idx] + arr[idx + i+1]);
+        for (int floor = 1; floor < N; floor++) {
+            for (int j = 0; j < floor; j++) {
+                dp[idx + floor] = Math.max(dp[idx + floor], dp[idx] + arr[idx + floor]);
+                dp[idx + floor+1] = Math.max(dp[idx + floor+1], dp[idx] + arr[idx + floor+1]);
 
                 idx++;
             }
         }
 
         int max = 0;
-        for (int i = 0; i < size; i++) {
-            max = Math.max(max, dp[i]);
-        }
+        for (int i = size-N ; i < size; i++) max = Math.max(max, dp[i]);
         System.out.println(max);
     }
 }
