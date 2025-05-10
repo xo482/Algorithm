@@ -1,54 +1,39 @@
-import java.io.*;
 import java.util.*;
+import java.io.*;
 
 public class Main {
-
-    static int[] arr;
-    static int max = 0;
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
     static int N;
+    static int[] arr, dp;
 
     public static void main(String[] args) throws IOException {
-        BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-        StringTokenizer st;
         N = Integer.parseInt(br.readLine());
-        int k = 0;
-        int len = N*(N+1)/2;
-        arr = new int[len];
+        int size = N * (N + 1) / 2;
+        arr = new int[size];
+        dp = new int[size];
 
-        for (int i = 0; i < N; i++) {
-            st = new StringTokenizer(br.readLine());
-            while (st.hasMoreTokens()) {
-                arr[k++] = Integer.parseInt(st.nextToken());
+        int idx = 0;
+        while (idx < size) {
+            if (st == null || !st.hasMoreTokens()) st = new StringTokenizer(br.readLine());
+            arr[idx++] = Integer.parseInt(st.nextToken());
+        }
+
+        dp[0] = arr[0];
+        idx = 0;
+        for (int i = 1; i < N; i++) {
+            for (int j = 0; j < i; j++) {
+                dp[idx + i] = Math.max(dp[idx + i], dp[idx] + arr[idx + i]);
+                dp[idx + i+1] = Math.max(dp[idx + i+1], dp[idx] + arr[idx + i+1]);
+
+                idx++;
             }
         }
 
-        int n = 0;
-        int i = 0;
-        while(n < N-1) {
-            arr[i + n + 1] = arr[i] + arr[i + n + 1];
-
-            for (int j = i; j < i+n; j++) {
-                if (arr[j] > arr[j + 1]) {
-                    arr[j + n + 2] = arr[j] + arr[j + n + 2];
-                } else {
-                    arr[j + n + 2] = arr[j+1] + arr[j + n + 2];
-                }
-            }
-
-
-            arr[i + n + n + 2] = arr[i + n] + arr[i + n + n + 2];
-
-
-            i = i + ++n;
+        int max = 0;
+        for (int i = 0; i < size; i++) {
+            max = Math.max(max, dp[i]);
         }
-
-        for (int j = i; j <= i+n; j++) {
-            if (arr[j] > max) {
-                max = arr[j];
-            }
-        }
-
         System.out.println(max);
-
     }
 }
