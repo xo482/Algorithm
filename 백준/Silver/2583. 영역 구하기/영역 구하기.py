@@ -1,15 +1,18 @@
 from collections import deque
 
+
 dr = [-1, 1, 0, 0]
 dc = [0, 0, 1, -1]
+cnt = 0
 
-def bfs(i, j):
-    q = deque([(i, j)])
+def dfs(r, c):
+    cnt = 0
+    stack = deque([(r,c)])
     board[i][j] = True
 
-    cnt = 1
-    while q:
-        r, c = q.popleft()
+    while stack:
+        cnt += 1
+        r, c = stack.pop()
 
         for k in range(4):
             nr = r + dr[k]
@@ -17,11 +20,11 @@ def bfs(i, j):
             if nr >= n or nr < 0 or nc >= m or nc < 0: continue
             if board[nr][nc]: continue
 
-            q.append((nr, nc))
             board[nr][nc] = True
-            cnt += 1
+            stack.append((nr,nc))
 
     ans.append(cnt)
+
 
 m, n, k = map(int, input().split())
 board = [[False] * m for _ in range(n)]
@@ -37,7 +40,7 @@ for _ in range(k):
 for i in range(n):
     for j in range(m):
         if board[i][j]: continue
-        bfs(i, j)
+        dfs(i, j)
 
 print(len(ans))
 print(*sorted(ans))
