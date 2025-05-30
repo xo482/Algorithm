@@ -13,7 +13,7 @@ public class Main {
         N = Integer.parseInt(br.readLine());
         building = new int[N];
         ans = new int[N][2]; // 0: 보이는 건물 수, 1: 가장 가까운 놈
-        for (int i = 0; i < N; i++) ans[i][1] = 1000000;
+        for (int i = 0; i < N; i++) ans[i][1] = 200000;
 
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) building[i] = Integer.parseInt(st.nextToken());
