@@ -42,7 +42,7 @@ public class Main {
         }
     }
 
-    // p에 대한 n!의 지수를 구하는 헬퍼
+    // n! 안에 p라는 소수가 몇개 들어 있는지 찾음 (레장드르)
     private static int countFactorInFactorial(int n, int p) {
         int cnt = 0;
         while (n > 0) {
@@ -51,8 +51,7 @@ public class Main {
         }
         return cnt;
     }
-
-    // C(n,r)에 대한 p의 지수: ν_p(n!) - ν_p(r!) - ν_p((n-r)!)
+    
     private static int getBinomialExponent(int n, int r, int p) {
         return countFactorInFactorial(n, p)
                 - countFactorInFactorial(r, p)
@@ -60,25 +59,15 @@ public class Main {
     }
 
     public static int solveCoprime(int n1, int r1, int n2, int r2) {
-        // 대칭성 때문에 r > n/2인 경우 r ← n-r 로 치환해도 무방
-        if (r1 > n1 - r1) r1 = n1 - r1;
-        if (r2 > n2 - r2) r2 = n2 - r2;
-
         for (int p : primeList) {
+            // 판별할 소수가 두 수보다 크면 끝냄
             if (p > n1 && p > n2) break;
-            // p가 둘 다 n보다 크면 더 이상 확인할 필요 없음
 
-            int e1 = (p <= n1)
-                    ? getBinomialExponent(n1, r1, p)
-                    : 0;
-            if (e1 == 0) continue;
+            int e1 = getBinomialExponent(n1, r1, p);
+            if (e1 == 0) continue; // 굳이 오른쪽 볼 필요 x
 
-            int e2 = (p <= n2)
-                    ? getBinomialExponent(n2, r2, p)
-                    : 0;
-            if (e2 > 0) {
-                return 0;
-            }
+            int e2 = getBinomialExponent(n2, r2, p);
+            if (e2 > 0) return 0; // 둘다 1개 이상 p를 가지고 있음
         }
         return 1;
     }
