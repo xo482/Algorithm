@@ -5,11 +5,11 @@ n = int(input())
 ls = list(map(int, input().split()))
 
 ans = [-1] * n
-stack = [(0, ls[0])]
-for i in range(1, n):
-    while len(stack) > 0 and stack[-1][1] < ls[i]:
-        ans[stack[-1][0]] = ls[i]
-        stack.pop()
-    stack.append([i, ls[i]])
+stack = []
+for i in range(n):
+    while stack and ls[stack[-1]] < ls[i]:
+        idx = stack.pop()
+        ans[idx] = ls[i]
+    stack.append(i)
 
 print(*ans)
