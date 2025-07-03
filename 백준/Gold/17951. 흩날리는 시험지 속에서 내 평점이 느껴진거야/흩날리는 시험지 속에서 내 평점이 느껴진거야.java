@@ -40,24 +40,6 @@ public class Main {
             else end = mid;
         }
 
-
-        int sum = 0;
-        int ans = Integer.MAX_VALUE;
-        for (int i = 0; i < N; i++) {
-            sum += scores[i];
-            if (sum >= start) {
-                ans = Math.min(ans, sum);
-                sum = 0;
-            }
-        }
-
-        System.out.println(ans);
+        System.out.println(start);
     }
 }
-
-// 휴게소 설치 문제랑 같은 방법으로 풀면 되겠다.
-// K개의 그룹 -> 갯수가 없음
-// 그러므로 점수의 합을 기준으로 이분 탐색
-
-// 그룹간의 차이가 가장 적어야함 == 각 그룹은 최소한으로 가져가야함
-// 그때의 그룹 중 최솟값을 구하는게 최솟값중 가장 큰 값
