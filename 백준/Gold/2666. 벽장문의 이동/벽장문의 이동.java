@@ -25,6 +25,7 @@ public class Main {
 
 
     static void tracking(int targetIdx, int L, int R, int move) {
+        if (move >= ans) return;
         if (targetIdx == M) {
             ans = Math.min(ans, move);
             return;
