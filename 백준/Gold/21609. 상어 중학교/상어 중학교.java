@@ -77,45 +77,17 @@ public class Main {
             if (groupInfo_Q.isEmpty()) break;
 
             GroupInfo groupInfo = groupInfo_Q.poll();
-
-//            System.out.println("삭제 전");
-//            printt();
-
             for (int[] point : groupInfo.points) board[point[0]][point[1]] = -2;
-
-//            System.out.println("삭제 후");
-//            printt();
-
             answer += (int) Math.pow((double) groupInfo.totalSize, 2);
-//            System.out.println("삭제 후 증가 수치");
-//            System.out.println((int) Math.pow((double) groupInfo.totalSize, 2));
-
-
             setting();
-
-
         }
 
         System.out.println(answer);
     }
 
-    private static void printt() {
-        for (int i = 0; i < N; i++) {
-            for (int j = 0; j < N; j++) {
-                System.out.print("\t"+board[i][j]);
-            }
-            System.out.println();
-        }
-        System.out.println();
-        System.out.println();
-    }
-
     // 돌려서 새로운 보드 보내줌
     private static void setting() {
         gravity();
-//        System.out.println("중력 작용");
-//        printt();
-
 
         int[][] newBoard = new int[N][N];
         for (int i = 0; i < N; i++) {
@@ -125,14 +97,7 @@ public class Main {
         }
         board = newBoard;
 
-//        System.out.println("돌려");
-//        printt();
-
-
         gravity();
-
-//        System.out.println("돌린 후 중력 작용");
-//        printt();
     }
 
     private static void gravity() {
