@@ -43,7 +43,7 @@ public class Main {
                     }
 
                     if (start == i || start == j || start == k) {
-                        for (int l = -3; l < 3; l++) {
+                        for (int l = -2; l < 3; l++) {
                             if (start+l == i || start+l == j || start+l == k) continue;
                             if (start+l < 0 || start+l >= N) continue;
 //                            System.out.println("Math.abs(elsa - (list[start+l] + anna_head)) = " + Math.abs(elsa - (list[start + l] + anna_head)));
