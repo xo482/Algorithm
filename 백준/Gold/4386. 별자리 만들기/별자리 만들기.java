@@ -1,112 +1,84 @@
 import java.io.*;
 import java.util.*;
 
-class Point {
-	int num;
-	double x;
-	double y;
-
-	Point(int num, double x, double y) {
-		this.num = num;
-		this.x = x;
-		this.y = y;
-	}
-}
-
-class Edge implements Comparable<Edge> {
-	int start;
-	int end;
-	double weight;
-
-	Edge(int start, int end, double weight) {
-		this.start = start;
-		this.end = end;
-		this.weight = weight;
-	}
-
-	@Override
-	public int compareTo(Edge o) {
-		if (weight < o.weight) {
-			return -1;
-		}
-		return 1;
-	}
-
-}
-
 public class Main {
-	static int[] parent;
-	static ArrayList<Edge> edgeList;
 
-	public static void main(String[] args) throws NumberFormatException, IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
-		BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(System.out));
-		StringTokenizer st;
+    static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+    static StringTokenizer st;
+    static int N;
+    static int[] isParent;
+    static double answer = 0;
+    static List<Point> points = new ArrayList<>();
+    static PriorityQueue<Edge> Q = new PriorityQueue<>();
 
-		int N = Integer.parseInt(br.readLine());
-		Point[] points = new Point[N];
+    public static void main(String[] args) throws IOException {
+        N = Integer.parseInt(br.readLine());
+        isParent = new int[N];
+        for (int i = 0; i < N; i++) isParent[i] = i;
 
-		for (int i = 0; i < N; i++) {
-			st = new StringTokenizer(br.readLine());
-			double x = Double.parseDouble(st.nextToken());
-			double y = Double.parseDouble(st.nextToken());
+        for (int i = 0; i < N; i++) {
+            st = new StringTokenizer(br.readLine());
+            double x = Double.parseDouble(st.nextToken());
+            double y = Double.parseDouble(st.nextToken());
+            points.add(new Point(i, x, y));
+        }
 
-			points[i] = new Point(i, x, y);
-		}
-		
-		// 모든 별들 간의 간선과 비용 정보를 edgeList에 넣어 둔다.
-		edgeList = new ArrayList<>();
-		for (int i = 0; i < N; i++) {
-			for (int j = i + 1; j < N; j++) {
-				double weight = distance(points[i], points[j]);
 
-				edgeList.add(new Edge(points[i].num, points[j].num, weight));
-			}
-		}
-		Collections.sort(edgeList); // 간선의 비용을 기준으로 오름차순 정렬.
+        for (int i = 0; i < N; i++) {
+            Point point_1 = points.get(i);
 
-		parent = new int[N];
-		for (int i = 0; i < N; i++) {
-			parent[i] = i;
-		}
+            for (int j = i+1; j < N; j++) {
+                Point point_2 = points.get(j);
 
-		double ans = 0;
-		
-		// 크루스칼 알고리즘 수행.
-		for (int i = 0; i < edgeList.size(); i++) {
-			Edge edge = edgeList.get(i);
+                double weight = Math.sqrt(Math.pow(point_1.x - point_2.x, 2) + Math.pow(point_1.y - point_2.y, 2));
+                Q.add(new Edge(point_1.ID, point_2.ID, weight));
+            }
+        }
 
-			if (find(edge.start) != find(edge.end)) {
-				ans += edge.weight;
-				union(edge.start, edge.end);
-			}
-		}
+        int cnt = 0;
+        while (!Q.isEmpty()) {
+            Edge edge = Q.poll();
+            int p1 = find(edge.ID_1);
+            int p2 = find(edge.ID_2);
+            if (p1 != p2) {
+                isParent[p2] = p1;
+                answer += edge.w;
+            }
+        }
 
-		bw.write(ans + "\n");
-		bw.flush();
-		bw.close();
-		br.close();
-	}
+        System.out.print(answer);
+    }
 
-	public static double distance(Point p1, Point p2) {
-		return Math.sqrt(Math.pow(p1.x - p2.x, 2) + Math.pow(p1.y - p2.y, 2));
-	}
+    static int find(int a) {
+        if (isParent[a] == a) return a;
+        return isParent[a] = find(isParent[a]);
+    }
 
-	public static int find(int x) {
-		if (x == parent[x]) {
-			return x;
-		}
+    static class Edge implements Comparable<Edge>{
+        int ID_1, ID_2;
+        double w;
 
-		return parent[x] = find(parent[x]);
-	}
+        public Edge(int ID_1, int ID_2, double w) {
+            this.ID_1 = ID_1;
+            this.ID_2 = ID_2;
+            this.w = w;
+        }
 
-	public static void union(int x, int y) {
-		x = find(x);
-		y = find(y);
+        @Override
+        public int compareTo(Edge o) {
+            if (this.w < o.w) return -1;
+            return 1;
+        }
+    }
 
-		if (x != y) {
-			parent[y] = x;
-		}
-	}
+    static class Point {
+        int ID;
+        double x, y;
 
+        public Point(int ID, double x, double y) {
+            this.ID = ID;
+            this.x = x;
+            this.y = y;
+        }
+    }
 }
