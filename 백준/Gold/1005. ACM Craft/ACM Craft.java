@@ -17,10 +17,12 @@ public class Main {
             int[] time = new int[N + 1];
             int[] answer = new int[N + 1];
             int[] inDegree = new int[N + 1];
-            for (int i = 0; i < N + 1; i++) list[i] = new ArrayList<>();
+            for (int i = 0; i < N + 1; i++) 
+                list[i] = new ArrayList<>();
 
             st = new StringTokenizer(br.readLine());
-            for (int i = 1; i < N+1; i++) answer[i] = time[i] = Integer.parseInt(st.nextToken());
+            for (int i = 1; i < N+1; i++) 
+                answer[i] = time[i] = Integer.parseInt(st.nextToken());
 
             while (K-- > 0) {
                 st = new StringTokenizer(br.readLine());
@@ -31,14 +33,12 @@ public class Main {
             }
 
             ArrayDeque<Integer> Q = new ArrayDeque<>();
-
             for (int i = 1; i < N + 1; i++)
                 if (inDegree[i] == 0)
                     Q.add(i);
 
             while (!Q.isEmpty()) {
                 Integer now = Q.poll();
-
                 for (int next : list[now]) {
                     answer[next] = Math.max(answer[next], answer[now] + time[next]);
                     if (--inDegree[next] == 0) Q.add(next);
@@ -46,9 +46,8 @@ public class Main {
                 }
             }
 
-            sb.append(answer[Integer.parseInt(br.readLine())]).append("\n");
+            sb.append(answer[Integer.parseInt(br.readLine())]).append('\n');
         }
-
         System.out.println(sb);
     }
 }
