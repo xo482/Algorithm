@@ -6,8 +6,7 @@ public class Main {
     static StringBuilder sb = new StringBuilder();
     static String line;
     static ArrayDeque<Integer> stack = new ArrayDeque<>();
-    static PriorityQueue<String> pq = new PriorityQueue<>();
-    static Set<String> set = new LinkedHashSet<>();
+    static Set<String> set = new TreeSet<>();
     static List<int[]> list = new ArrayList<>();
 
     public static void main(String[] args) throws Exception {
@@ -40,9 +39,7 @@ public class Main {
             }
             set.add(ssb.toString());
         }
-        pq = new PriorityQueue<>(set);
-        while (!pq.isEmpty()) {
-            String poll = pq.poll();
+        for (String poll : set){
             sb.append(poll).append("\n");
         }
         System.out.println(sb);
