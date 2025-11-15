@@ -40,6 +40,7 @@ public class Main {
                 sb.append(n).append('\n');
                 flag = true;
             }
+            return;
         }
 
         for (int i = 1; i <= 9; i++) {
