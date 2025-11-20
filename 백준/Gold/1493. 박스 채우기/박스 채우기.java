@@ -1,6 +1,8 @@
 import java.io.*;
 import java.util.*;
 
+// 44% return boolean -> return void
+// 52% Math.pow(2, i) -> (1 << i)
 public class Main {
     static BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
     static StringTokenizer st;
