@@ -42,12 +42,8 @@ public class Main {
 
             int len = 1 << i;
             tracking(l - len, len, len);
-            tracking(len, w - len, len);
-            tracking(len, len, h - len);
-            tracking(l - len, w - len, len);
-            tracking(l - len, len, h - len);
-            tracking(len, w - len, h - len);
-            tracking(l - len, w - len, h - len);
+            tracking(l, w - len, len);
+            tracking(l, w, h - len);
             return;
         }
 
