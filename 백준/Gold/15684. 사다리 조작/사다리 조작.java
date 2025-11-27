@@ -24,26 +24,27 @@ public class Main {
         }
 
         for (int i = 0; i <= 3; i++) {
-            tracking(0, i);
+            tracking(0, 0, 0, i);
             if (flag) { ans = i; break; }
         }
 
         System.out.println(ans);
     }
 
-    private static void tracking(int depth, int max_depth) {
+    private static void tracking(int pre_i, int pre_j, int depth, int max_depth) {
         if (depth == max_depth) {
             flag = check();
             return;
         }
 
         for (int i = 1; i < N; i++) {
-            for (int j = 1; j <= H; j++) {
+            for (int j = pre_j; j <= H; j++) {
+                if (j == pre_j && i < pre_i) continue;
                 if (board[i][j]) continue;
                 if (board[i - 1][j] || board[i + 1][j]) continue;
 
                 board[i][j] = true;
-                tracking(depth + 1, max_depth);
+                tracking(i, j, depth + 1, max_depth);
                 board[i][j] = false;
 
                 if (flag) break;
