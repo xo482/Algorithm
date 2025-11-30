@@ -6,8 +6,9 @@ public class Main {
     static StringTokenizer st;
     static int N, K;
     static long ans = 0;
-    static PriorityQueue<Site> pq = new PriorityQueue<>();
+    static ArrayDeque<Site> Q = new ArrayDeque<>();
     static Set<Integer> visited = new HashSet<>();
+    static int[] move = new int[]{-1, 1};
 
     public static void main(String[] args) throws Exception {
         st = new StringTokenizer(br.readLine());
@@ -17,49 +18,34 @@ public class Main {
         st = new StringTokenizer(br.readLine());
         for (int i = 0; i < N; i++) {
             int pos = Integer.parseInt(st.nextToken());
-            pq.add(new Site(pos, 1));
+            Q.add(new Site(pos, 0));
             visited.add(pos);
         }
 
         while (K > 0) {
-            Site now = pq.poll();
-            int left = now.pos - now.distance;
-            int right = now.pos + now.distance;
+            Site now = Q.removeFirst();
 
-            boolean flag = false;
-            if (!visited.contains(left)) {
-                visited.add(left);
-                ans += now.distance;
-                K--;
-                flag = true;
-            }
-            if (K == 0) break;
+            for (int i = 0; i < 2; i++) {
+                int nxt_pos = now.pos + move[i];
+                if (visited.contains(nxt_pos)) continue;
 
-            if (!visited.contains(right)) {
-                visited.add(right);
-                ans += now.distance;
+                visited.add(nxt_pos);
+                ans += now.index + 1;
                 K--;
-                flag = true;
+                if(K == 0) break;
+                Q.add(new Site(nxt_pos, now.index + 1));
             }
-            
-            if (flag) pq.add(new Site(now.pos, now.distance + 1));
         }
-
         System.out.println(ans);
     }
 
-    static class Site implements Comparable<Site>{
+    static class Site {
         int pos;
-        int distance;
+        int index;
 
-        public Site(int pos, int distance) {
+        public Site(int pos, int index) {
             this.pos = pos;
-            this.distance = distance;
-        }
-
-        @Override
-        public int compareTo(Site o) {
-            return this.distance - o.distance;
+            this.index = index;
         }
     }
 }
