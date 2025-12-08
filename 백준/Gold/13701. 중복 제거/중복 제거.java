@@ -12,9 +12,10 @@ public class Main {
         while (st.hasMoreTokens()) {
             int x = Integer.parseInt(st.nextToken());
 
-            if (bitSet.get(x)) continue;
-            bitSet.set(x);
-            sb.append(x).append(' ');
+            if (!bitSet.get(x)) {
+                bitSet.set(x);
+                sb.append(x).append(' ');
+            }
         }
         System.out.print(sb);
     }
